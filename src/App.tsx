@@ -4,7 +4,7 @@ import { useMemo, useState } from 'react'
 type Screen = 'home' | 'floor' | 'room' | 'departure' | 'absence'
 type Light = { id:string; name:string; on:boolean; brightness:number }
 type CheckItem = { id:string; label:string; detail:string; ok:boolean }
-type RoomOverlay = { id:string; label:string; temp:string; left:number; top:number; width:number; height:number; light?:boolean }
+type RoomOverlay = { id:string; label:string; temp:string; left:number; top:number; width:number; height:number; light?:boolean; telemetryX?:number; telemetryY?:number }
 
 const initialLights: Light[] = [
   { id:'canape', name:'Canapé', on:true, brightness:42 },
@@ -20,25 +20,25 @@ const houseLevels=[
   {id:'basement',label:'Sous-sol',temp:'18,9°',rooms:'Chaufferie · Stockage · Pompes',top:83,height:17},
 ]
 const roomOverlays:RoomOverlay[]=[
-  {id:'attic',label:'Combles',temp:'19,1°',left:43.8,top:15.0,width:13.0,height:10.0},
-  {id:'c1',label:'Chambre 1',temp:'20,3°',left:11.6,top:27.2,width:15.8,height:17.4,light:true},
-  {id:'c2',label:'Chambre 2',temp:'19,8°',left:27.4,top:27.2,width:15.8,height:17.4},
-  {id:'c3',label:'Chambre 3',temp:'20,2°',left:43.2,top:27.2,width:15.8,height:17.4,light:true},
-  {id:'office',label:'Bureau',temp:'20,0°',left:59.0,top:27.2,width:15.6,height:17.4,light:true},
-  {id:'bath2',label:'SDB',temp:'20,5°',left:74.6,top:27.2,width:11.8,height:17.4},
-  {id:'master',label:'Ch. parentale',temp:'20,6°',left:11.6,top:46.1,width:15.8,height:17.4,light:true},
-  {id:'dress',label:'Dressing',temp:'19,7°',left:27.4,top:46.1,width:15.8,height:17.4},
-  {id:'masterbath',label:'SDB parentale',temp:'20,1°',left:43.2,top:46.1,width:15.8,height:17.4,light:true},
-  {id:'guest',label:'Chambre',temp:'20,0°',left:59.0,top:46.1,width:15.6,height:17.4,light:true},
-  {id:'bath1',label:'SDB',temp:'20,2°',left:74.6,top:46.1,width:11.8,height:17.4},
-  {id:'kitchen',label:'Cuisine',temp:'21,3°',left:11.4,top:64.3,width:17.6,height:17.3,light:true},
-  {id:'dining',label:'Salle à manger',temp:'21,1°',left:29.0,top:64.3,width:17.8,height:17.3,light:true},
-  {id:'living',label:'Salon',temp:'21,2°',left:46.8,top:64.3,width:17.8,height:17.3,light:true},
-  {id:'laundry',label:'Buanderie',temp:'20,8°',left:64.6,top:64.3,width:12.8,height:17.3},
-  {id:'entry',label:'Entrée',temp:'21,0°',left:77.4,top:64.3,width:9.2,height:17.3,light:true},
-  {id:'boiler',label:'Chaufferie',temp:'18,7°',left:13.3,top:83.4,width:22.4,height:14.5},
-  {id:'storage',label:'Stockage',temp:'18,9°',left:35.7,top:83.4,width:24.0,height:14.5},
-  {id:'pumps',label:'Pompes',temp:'18,6°',left:59.7,top:83.4,width:24.0,height:14.5},
+  {id:'attic',label:'Combles',temp:'19,1°',left:43.8,top:15.0,width:13.0,height:10.0,telemetryX:.8,telemetryY:2.4},
+  {id:'c1',label:'Chambre 1',temp:'20,3°',left:11.6,top:27.2,width:15.8,height:17.4,light:true,telemetryX:.8},
+  {id:'c2',label:'Chambre 2',temp:'19,8°',left:27.4,top:27.2,width:15.8,height:17.4,telemetryX:.8},
+  {id:'c3',label:'Chambre 3',temp:'20,2°',left:43.2,top:27.2,width:15.8,height:17.4,light:true,telemetryX:.8},
+  {id:'office',label:'Bureau',temp:'20,0°',left:59.0,top:27.2,width:15.6,height:17.4,light:true,telemetryX:.7},
+  {id:'bath2',label:'SDB',temp:'20,5°',left:74.6,top:27.2,width:11.8,height:17.4,telemetryX:.7},
+  {id:'master',label:'Ch. parentale',temp:'20,6°',left:11.6,top:46.1,width:15.8,height:17.4,light:true,telemetryX:.6},
+  {id:'dress',label:'Dressing',temp:'19,7°',left:27.4,top:46.1,width:15.8,height:17.4,telemetryX:.9},
+  {id:'masterbath',label:'SDB parentale',temp:'20,1°',left:43.2,top:46.1,width:15.8,height:17.4,light:true,telemetryX:.6},
+  {id:'guest',label:'Chambre',temp:'20,0°',left:59.0,top:46.1,width:15.6,height:17.4,light:true,telemetryX:.7},
+  {id:'bath1',label:'SDB',temp:'20,2°',left:74.6,top:46.1,width:11.8,height:17.4,telemetryX:.8},
+  {id:'kitchen',label:'Cuisine',temp:'21,3°',left:11.4,top:64.3,width:17.6,height:17.3,light:true,telemetryX:.8,telemetryY:2.0},
+  {id:'dining',label:'Salle à manger',temp:'21,1°',left:29.0,top:64.3,width:17.8,height:17.3,light:true,telemetryX:.8,telemetryY:2.0},
+  {id:'living',label:'Salon',temp:'21,2°',left:46.8,top:64.3,width:17.8,height:17.3,light:true,telemetryX:.8,telemetryY:2.0},
+  {id:'laundry',label:'Buanderie',temp:'20,8°',left:64.6,top:64.3,width:12.8,height:17.3,telemetryX:1.0,telemetryY:2.0},
+  {id:'entry',label:'Entrée',temp:'21,0°',left:77.4,top:64.3,width:9.2,height:17.3,light:true,telemetryX:.7,telemetryY:2.0},
+  {id:'boiler',label:'Chaufferie',temp:'18,7°',left:13.3,top:83.4,width:22.4,height:14.5,telemetryX:.5,telemetryY:1.3},
+  {id:'storage',label:'Stockage',temp:'18,9°',left:35.7,top:83.4,width:24.0,height:14.5,telemetryX:.8,telemetryY:1.3},
+  {id:'pumps',label:'Pompes',temp:'18,6°',left:59.7,top:83.4,width:24.0,height:14.5,telemetryX:.8,telemetryY:1.3},
 ]
 const telemetryInset={x:1.6,y:2.4}
 
@@ -46,7 +46,7 @@ function Nav({active,onNavigate}:{active:Screen;onNavigate:(s:Screen)=>void}){re
 function Shell({active,onNavigate,children}:{active:Screen;onNavigate:(s:Screen)=>void;children:React.ReactNode}){return <div className="shell"><main>{children}</main><Nav active={active} onNavigate={onNavigate}/></div>}
 function Back({title,eyebrow,onBack}:{title:string;eyebrow:string;onBack:()=>void}){return <header className="top"><button className="round" onClick={onBack}>‹</button><div><p className="eyebrow">{eyebrow}</p><h1>{title}</h1></div><span/></header>}
 
-function HouseStack({onFloor}:{onFloor:()=>void}){const [selected,setSelected]=useState('ground');return <motion.div className="houseArtwork" initial={{opacity:0,y:8}} animate={{opacity:1,y:0}} transition={{duration:.28}}><div className="houseImageStage"><img src={`${import.meta.env.BASE_URL}file_00000000ff8481f4854f06e04fb31d8e.png`} alt="Maison Alfred en coupe"/>{roomOverlays.filter(r=>r.light).map(room=><span key={`glow-${room.id}`} className="roomGlow" style={{left:`${room.left}%`,top:`${room.top}%`,width:`${room.width}%`,height:`${room.height}%`}}/>)}{roomOverlays.map(room=><span key={room.id} className="roomTelemetry" style={{left:`${room.left+telemetryInset.x}%`,top:`${room.top+telemetryInset.y}%`}}><span className="roomName">{room.label}</span><span className="roomValue"><b>{room.temp}</b>{room.light&&<i aria-label="Lumière allumée">●</i>}</span></span>)}{houseLevels.map(level=><button key={level.id} className={`floorHotspot ${level.id===selected?'selected':''} ${level.active?'active':''}`} style={{top:`${level.top}%`,height:`${level.height}%`}} onClick={()=>setSelected(level.id)} onDoubleClick={onFloor} aria-label={`Sélectionner ${level.label}`}><span className="floorBadge"><b>{level.label}</b><small>{level.temp}</small></span>{level.active&&<span className="floorState">Calme</span>}</button>)}</div><AnimatePresence mode="wait"><motion.button key={selected} className="floorSummary" onClick={onFloor} initial={{opacity:0,y:4}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-3}} transition={{duration:.15}}><span><b>{houseLevels.find(l=>l.id===selected)?.label}</b><small>{houseLevels.find(l=>l.id===selected)?.rooms}</small></span><strong>Explorer →</strong></motion.button></AnimatePresence><div className="houseLegend"><span><i className="legendLight">●</i> Lumière allumée</span><span>Température par pièce</span></div><span className="houseHint">Touchez un étage pour voir ses pièces</span></motion.div>}
+function HouseStack({onFloor}:{onFloor:()=>void}){const [selected,setSelected]=useState('ground');return <motion.div className="houseArtwork" initial={{opacity:0,y:8}} animate={{opacity:1,y:0}} transition={{duration:.28}}><div className="houseImageStage"><img src={`${import.meta.env.BASE_URL}file_00000000ff8481f4854f06e04fb31d8e.png`} alt="Maison Alfred en coupe"/>{roomOverlays.filter(r=>r.light).map(room=><span key={`glow-${room.id}`} className="roomGlow" style={{left:`${room.left}%`,top:`${room.top}%`,width:`${room.width}%`,height:`${room.height}%`}}/>)}{roomOverlays.map(room=><span key={room.id} className="roomTelemetry" style={{left:`${room.left+(room.telemetryX??telemetryInset.x)}%`,top:`${room.top+(room.telemetryY??telemetryInset.y)}%`}}><span className="roomName">{room.label}</span><span className="roomValue"><b>{room.temp}</b>{room.light&&<i aria-label="Lumière allumée">●</i>}</span></span>)}{houseLevels.map(level=><button key={level.id} className={`floorHotspot ${level.id===selected?'selected':''} ${level.active?'active':''}`} style={{top:`${level.top}%`,height:`${level.height}%`}} onClick={()=>setSelected(level.id)} onDoubleClick={onFloor} aria-label={`Sélectionner ${level.label}`}><span className="floorBadge"><b>{level.label}</b><small>{level.temp}</small></span>{level.active&&<span className="floorState">Calme</span>}</button>)}</div><AnimatePresence mode="wait"><motion.button key={selected} className="floorSummary" onClick={onFloor} initial={{opacity:0,y:4}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-3}} transition={{duration:.15}}><span><b>{houseLevels.find(l=>l.id===selected)?.label}</b><small>{houseLevels.find(l=>l.id===selected)?.rooms}</small></span><strong>Explorer →</strong></motion.button></AnimatePresence><div className="houseLegend"><span><i className="legendLight">●</i> Lumière allumée</span><span>Température par pièce</span></div><span className="houseHint">Touchez un étage pour voir ses pièces</span></motion.div>}
 
 function Home({go}:{go:(s:Screen)=>void}){return <Shell active="home" onNavigate={go}><section className="page"><header className="hero"><div><p className="eyebrow">ALFRED</p><h1>Bonjour.</h1><p>Tout est calme à la maison.</p></div><div className="monogram">A</div></header><div className="summary"><article><span>Confort</span><strong>21,2°</strong><small>Température moyenne</small></article><article><span>Sécurité</span><strong>Tout est en ordre</strong><small>Portes et fenêtres fermées</small></article></div><div className="heading"><div><p className="eyebrow">MAISON</p><h2>Vue d’ensemble</h2></div><span className="pill">Occupée</span></div><HouseStack onFloor={()=>go('floor')}/><button className="primary" onClick={()=>go('departure')}><span>Je pars</span><small>Préparer la maison avant votre départ</small><b>→</b></button></section></Shell>}
 
