@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react'
 type Screen = 'home' | 'floor' | 'room' | 'departure' | 'absence'
 type Light = { id:string; name:string; on:boolean; brightness:number }
 type CheckItem = { id:string; label:string; detail:string; ok:boolean }
+type RoomOverlay = { id:string; label:string; temp:string; x:number; y:number; w:number; h:number; light?:boolean }
 
 const initialLights: Light[] = [
   { id:'canape', name:'Canapé', on:true, brightness:42 },
@@ -18,12 +19,33 @@ const houseLevels=[
   {id:'ground',label:'RDC',temp:'21,2°',rooms:'Cuisine · Salle à manger · Salon · Buanderie · Entrée',top:65,height:18,active:true},
   {id:'basement',label:'Sous-sol',temp:'18,9°',rooms:'Chaufferie · Stockage · Pompes',top:83,height:17},
 ]
+const roomOverlays:RoomOverlay[]=[
+  {id:'attic',label:'Combles',temp:'19,1°',x:50,y:20,w:30,h:11},
+  {id:'c1',label:'Chambre 1',temp:'20,3°',x:23,y:37,w:15,h:14,light:true},
+  {id:'c2',label:'Chambre 2',temp:'19,8°',x:38,y:37,w:15,h:14,light:true},
+  {id:'c3',label:'Chambre 3',temp:'20,2°',x:53,y:37,w:15,h:14,light:true},
+  {id:'office',label:'Bureau',temp:'20,0°',x:68,y:37,w:14,h:14,light:true},
+  {id:'bath2',label:'SDB',temp:'20,5°',x:82,y:37,w:12,h:14},
+  {id:'master',label:'Ch. parentale',temp:'20,6°',x:23,y:56,w:15,h:14,light:true},
+  {id:'dress',label:'Dressing',temp:'19,7°',x:38,y:56,w:14,h:14,light:true},
+  {id:'masterbath',label:'SDB parentale',temp:'20,1°',x:53,y:56,w:15,h:14,light:true},
+  {id:'guest',label:'Chambre',temp:'20,0°',x:69,y:56,w:15,h:14,light:true},
+  {id:'bath1',label:'SDB',temp:'20,2°',x:82,y:56,w:11,h:14},
+  {id:'kitchen',label:'Cuisine',temp:'21,3°',x:23,y:73,w:16,h:13,light:true},
+  {id:'dining',label:'Salle à manger',temp:'21,1°',x:40,y:73,w:17,h:13,light:true},
+  {id:'living',label:'Salon',temp:'21,2°',x:57,y:73,w:17,h:13,light:true},
+  {id:'laundry',label:'Buanderie',temp:'20,8°',x:71,y:73,w:12,h:13},
+  {id:'entry',label:'Entrée',temp:'21,0°',x:83,y:73,w:11,h:13,light:true},
+  {id:'boiler',label:'Chaufferie',temp:'18,7°',x:30,y:90,w:20,h:12},
+  {id:'storage',label:'Stockage',temp:'18,9°',x:50,y:90,w:20,h:12},
+  {id:'pumps',label:'Pompes',temp:'18,6°',x:70,y:90,w:20,h:12},
+]
 
 function Nav({active,onNavigate}:{active:Screen;onNavigate:(s:Screen)=>void}){return <nav className="nav"><button className={active==='home'?'active':''} onClick={()=>onNavigate('home')}>Maison</button><button className={active==='floor'||active==='room'?'active':''} onClick={()=>onNavigate('floor')}>Pièces</button><button className={active==='departure'||active==='absence'?'active':''} onClick={()=>onNavigate('departure')}>Présence</button></nav>}
 function Shell({active,onNavigate,children}:{active:Screen;onNavigate:(s:Screen)=>void;children:React.ReactNode}){return <div className="shell"><main>{children}</main><Nav active={active} onNavigate={onNavigate}/></div>}
 function Back({title,eyebrow,onBack}:{title:string;eyebrow:string;onBack:()=>void}){return <header className="top"><button className="round" onClick={onBack}>‹</button><div><p className="eyebrow">{eyebrow}</p><h1>{title}</h1></div><span/></header>}
 
-function HouseStack({onFloor}:{onFloor:()=>void}){const [selected,setSelected]=useState('ground');return <motion.div className="houseArtwork" initial={{opacity:0,y:8}} animate={{opacity:1,y:0}} transition={{duration:.28}}><div className="houseImageStage"><img src={`${import.meta.env.BASE_URL}file_00000000ff8481f4854f06e04fb31d8e.png`} alt="Maison Alfred en coupe"/>{houseLevels.map(level=><button key={level.id} className={`floorHotspot ${level.id===selected?'selected':''} ${level.active?'active':''}`} style={{top:`${level.top}%`,height:`${level.height}%`}} onClick={()=>setSelected(level.id)} onDoubleClick={onFloor} aria-label={`Sélectionner ${level.label}`}><span className="floorBadge"><b>{level.label}</b><small>{level.temp}</small></span>{level.active&&<span className="floorState">Calme</span>}</button>)}</div><AnimatePresence mode="wait"><motion.button key={selected} className="floorSummary" onClick={onFloor} initial={{opacity:0,y:4}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-3}} transition={{duration:.15}}><span><b>{houseLevels.find(l=>l.id===selected)?.label}</b><small>{houseLevels.find(l=>l.id===selected)?.rooms}</small></span><strong>Explorer →</strong></motion.button></AnimatePresence><span className="houseHint">Touchez un étage pour voir ses pièces</span></motion.div>}
+function HouseStack({onFloor}:{onFloor:()=>void}){const [selected,setSelected]=useState('ground');return <motion.div className="houseArtwork" initial={{opacity:0,y:8}} animate={{opacity:1,y:0}} transition={{duration:.28}}><div className="houseImageStage"><img src={`${import.meta.env.BASE_URL}file_00000000ff8481f4854f06e04fb31d8e.png`} alt="Maison Alfred en coupe"/>{roomOverlays.filter(r=>r.light).map(room=><span key={`glow-${room.id}`} className="roomGlow" style={{left:`${room.x-room.w/2}%`,top:`${room.y-room.h/2}%`,width:`${room.w}%`,height:`${room.h}%`}}/>)}{roomOverlays.map(room=><span key={room.id} className="roomTelemetry" style={{left:`${room.x}%`,top:`${room.y}%`}}><b>{room.temp}</b>{room.light&&<i aria-label="Lumière allumée">●</i>}</span>)}{houseLevels.map(level=><button key={level.id} className={`floorHotspot ${level.id===selected?'selected':''} ${level.active?'active':''}`} style={{top:`${level.top}%`,height:`${level.height}%`}} onClick={()=>setSelected(level.id)} onDoubleClick={onFloor} aria-label={`Sélectionner ${level.label}`}><span className="floorBadge"><b>{level.label}</b><small>{level.temp}</small></span>{level.active&&<span className="floorState">Calme</span>}</button>)}</div><AnimatePresence mode="wait"><motion.button key={selected} className="floorSummary" onClick={onFloor} initial={{opacity:0,y:4}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-3}} transition={{duration:.15}}><span><b>{houseLevels.find(l=>l.id===selected)?.label}</b><small>{houseLevels.find(l=>l.id===selected)?.rooms}</small></span><strong>Explorer →</strong></motion.button></AnimatePresence><div className="houseLegend"><span><i className="legendLight">●</i> Lumière allumée</span><span>Température par pièce</span></div><span className="houseHint">Touchez un étage pour voir ses pièces</span></motion.div>}
 
 function Home({go}:{go:(s:Screen)=>void}){return <Shell active="home" onNavigate={go}><section className="page"><header className="hero"><div><p className="eyebrow">ALFRED</p><h1>Bonjour.</h1><p>Tout est calme à la maison.</p></div><div className="monogram">A</div></header><div className="summary"><article><span>Confort</span><strong>21,2°</strong><small>Température moyenne</small></article><article><span>Sécurité</span><strong>Tout est en ordre</strong><small>Portes et fenêtres fermées</small></article></div><div className="heading"><div><p className="eyebrow">MAISON</p><h2>Vue d’ensemble</h2></div><span className="pill">Occupée</span></div><HouseStack onFloor={()=>go('floor')}/><button className="primary" onClick={()=>go('departure')}><span>Je pars</span><small>Préparer la maison avant votre départ</small><b>→</b></button></section></Shell>}
 
