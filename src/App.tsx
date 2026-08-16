@@ -12,19 +12,11 @@ const initialLights: Light[] = [
   { id:'lampadaire', name:'Lampadaire', on:true, brightness:28 },
 ]
 
-const houseFloors = [
-  { id:'attic', name:'Combles', temp:'19,1°', rooms:['Pièce vide'], kind:'attic' },
-  { id:'second', name:'2e étage', temp:'20,1°', rooms:['Chambre 1','Chambre 2','Chambre 3','Bureau','SDB'] },
-  { id:'first', name:'1er étage', temp:'20,4°', rooms:['Chambre parentale','Dressing','SDB parentale','Chambre','SDB'] },
-  { id:'ground', name:'RDC', temp:'21,2°', rooms:['Cuisine','Salle à manger','Salon','Buanderie','WC','Entrée'] },
-  { id:'basement', name:'Sous-sol', temp:'18,9°', rooms:['Chaufferie','Stockage','Pompes'] },
-]
-
 function Nav({active,onNavigate}:{active:Screen;onNavigate:(s:Screen)=>void}){return <nav className="nav"><button className={active==='home'?'active':''} onClick={()=>onNavigate('home')}>Maison</button><button className={active==='floor'||active==='room'?'active':''} onClick={()=>onNavigate('floor')}>Pièces</button><button className={active==='departure'||active==='absence'?'active':''} onClick={()=>onNavigate('departure')}>Présence</button></nav>}
 function Shell({active,onNavigate,children}:{active:Screen;onNavigate:(s:Screen)=>void;children:React.ReactNode}){return <div className="shell"><main>{children}</main><Nav active={active} onNavigate={onNavigate}/></div>}
 function Back({title,eyebrow,onBack}:{title:string;eyebrow:string;onBack:()=>void}){return <header className="top"><button className="round" onClick={onBack}>‹</button><div><p className="eyebrow">{eyebrow}</p><h1>{title}</h1></div><span/></header>}
 
-function HouseStack({onFloor}:{onFloor:()=>void}){return <button className="houseIllustration detailedHouse" onClick={onFloor} aria-label="Ouvrir la maison"><div className="roof atticRoof"><div className="atticWindow">□</div></div><div className="houseBody">{houseFloors.map((floor,i)=><motion.div key={floor.id} className={`houseLevel detailedLevel ${floor.id==='ground'?'focus':''} ${floor.kind==='attic'?'atticLevel':''}`} initial={{opacity:0,y:8}} animate={{opacity:1,y:0}} transition={{delay:i*.05}}><div className="levelName"><b>{floor.name}</b><small>{floor.temp}</small></div><div className="roomStrip">{floor.rooms.map(room=><span key={room}>{room}</span>)}</div></motion.div>)}</div><div className="houseBase"/></button>}
+function HouseStack({onFloor}:{onFloor:()=>void}){return <motion.button className="houseArtwork" onClick={onFloor} aria-label="Ouvrir la maison" initial={{opacity:0,y:8}} animate={{opacity:1,y:0}} transition={{duration:.28}}><img src={`${import.meta.env.BASE_URL}illustrations/house-overview.svg`} alt="Maison Alfred en coupe avec les cinq niveaux et toutes les pièces"/><span className="houseHint">Touchez la maison pour explorer</span></motion.button>}
 
 function Home({go}:{go:(s:Screen)=>void}){return <Shell active="home" onNavigate={go}><section className="page"><header className="hero"><div><p className="eyebrow">ALFRED</p><h1>Bonjour.</h1><p>Tout est calme à la maison.</p></div><div className="monogram">A</div></header><div className="summary"><article><span>Confort</span><strong>21,2°</strong><small>Température moyenne</small></article><article><span>Sécurité</span><strong>Tout est en ordre</strong><small>Portes et fenêtres fermées</small></article></div><div className="heading"><div><p className="eyebrow">MAISON</p><h2>Vue d’ensemble</h2></div><span className="pill">Occupée</span></div><HouseStack onFloor={()=>go('floor')}/><button className="primary" onClick={()=>go('departure')}><span>Je pars</span><small>Préparer la maison avant votre départ</small><b>→</b></button></section></Shell>}
 
