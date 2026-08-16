@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 720" role="img" aria-labelledby="title desc">
+<title id="title">Maison Alfred en coupe</title><desc id="desc">Cinq niveaux: combles, deuxième étage, premier étage, rez-de-chaussée et sous-sol.</desc>
+<defs><style>.o{fill:#fbf8f1;stroke:#566b54;stroke-width:3}.w{stroke:#8b9588;stroke-width:2;fill:none}.f{fill:#e6ece2;stroke:#71846b;stroke-width:2}.t{font:700 16px Inter,Arial,sans-serif;fill:#273128}.s{font:500 13px Inter,Arial,sans-serif;fill:#697168}.l{font:800 17px Inter,Arial,sans-serif;fill:#53664f}.temp{font:600 13px Inter,Arial,sans-serif;fill:#7c837b}.sage{fill:#dfe8dc}.wood{fill:#c8b99f;stroke:#8f826f;stroke-width:1.5}.dark{stroke:#53664f;stroke-width:3;fill:none}.thin{stroke:#9ca49a;stroke-width:1.5;fill:none}</style></defs>
+<rect width="1000" height="720" fill="none"/>
+<!-- roof / attic -->
+<path class="o" d="M120 170 L500 35 L880 170 L835 170 L500 55 L165 170 Z"/>
+<line class="w" x1="165" y1="170" x2="835" y2="170"/>
+<rect x="472" y="88" width="56" height="54" rx="4" class="f"/><line class="w" x1="500" y1="88" x2="500" y2="142"/><line class="w" x1="472" y1="115" x2="528" y2="115"/>
+<text x="145" y="105" class="l">Combles</text><text x="145" y="127" class="temp">19,1°</text><text x="500" y="152" class="s" text-anchor="middle">Pièce unique · vide</text>
+<!-- main house frame -->
+<rect x="150" y="170" width="700" height="455" class="o"/>
+<!-- floor bands -->
+<rect x="150" y="170" width="700" height="115" fill="#fffdf8"/><rect x="150" y="285" width="700" height="115" fill="#fffdf8"/><rect x="150" y="400" width="700" height="115" fill="#eef3eb"/><rect x="150" y="515" width="700" height="110" fill="#f2eee5"/>
+<line class="dark" x1="150" y1="285" x2="850" y2="285"/><line class="dark" x1="150" y1="400" x2="850" y2="400"/><line class="dark" x1="150" y1="515" x2="850" y2="515"/>
+<!-- labels -->
+<g><text x="70" y="205" class="l">2e étage</text><text x="70" y="228" class="temp">20,1°</text><text x="70" y="320" class="l">1er étage</text><text x="70" y="343" class="temp">20,4°</text><text x="70" y="435" class="l">RDC</text><text x="70" y="458" class="temp">21,2°</text><text x="70" y="550" class="l">Sous-sol</text><text x="70" y="573" class="temp">18,9°</text></g>
+<!-- 2e partitions -->
+<g class="thin"><line x1="290" y1="170" x2="290" y2="285"/><line x1="420" y1="170" x2="420" y2="285"/><line x1="550" y1="170" x2="550" y2="285"/><line x1="690" y1="170" x2="690" y2="285"/></g>
+<g class="t" text-anchor="middle"><text x="220" y="195">Chambre 1</text><text x="355" y="195">Chambre 2</text><text x="485" y="195">Chambre 3</text><text x="620" y="195">Bureau</text><text x="770" y="195">SDB</text></g>
+<!-- beds -->
+<g class="wood"><rect x="182" y="226" width="76" height="25" rx="5"/><rect x="186" y="218" width="68" height="10" rx="4"/><rect x="317" y="226" width="76" height="25" rx="5"/><rect x="321" y="218" width="68" height="10" rx="4"/><rect x="447" y="226" width="76" height="25" rx="5"/><rect x="451" y="218" width="68" height="10" rx="4"/></g>
+<!-- desk --> <g class="wood"><rect x="586" y="225" width="70" height="8"/><line class="w" x1="594" y1="233" x2="594" y2="257"/><line class="w" x1="648" y1="233" x2="648" y2="257"/><rect x="612" y="210" width="32" height="16" rx="2"/></g>
+<!-- shower --> <g class="w"><path d="M744 217 q22-22 42 0"/><line x1="765" y1="216" x2="765" y2="253"/><path d="M749 224 l-6 18 M757 224 l-3 18 M773 224 l4 18 M781 224 l7 18"/></g>
+<!-- 1er partitions -->
+<g class="thin"><line x1="310" y1="285" x2="310" y2="400"/><line x1="420" y1="285" x2="420" y2="400"/><line x1="555" y1="285" x2="555" y2="400"/><line x1="700" y1="285" x2="700" y2="400"/></g>
+<g class="t" text-anchor="middle"><text x="230" y="310">Chambre parentale</text><text x="365" y="310">Dressing</text><text x="487" y="310">SDB parentale</text><text x="625" y="310">Chambre</text><text x="775" y="310">SDB</text></g>
+<g class="wood"><rect x="190" y="344" width="80" height="27" rx="5"/><rect x="194" y="335" width="72" height="10" rx="4"/><rect x="590" y="344" width="70" height="27" rx="5"/><rect x="594" y="335" width="62" height="10" rx="4"/></g>
+<!-- dressing --> <g class="wood"><rect x="335" y="331" width="60" height="48"/><line class="w" x1="365" y1="331" x2="365" y2="379"/><line class="w" x1="343" y1="342" x2="357" y2="342"/><line class="w" x1="373" y1="342" x2="387" y2="342"/></g>
+<!-- parent bath tub + bath --> <g class="w"><rect x="452" y="346" width="70" height="25" rx="12"/><path d="M475 329 q18-18 36 0"/><line x1="493" y1="328" x2="493" y2="347"/><path d="M748 330 q22-22 42 0"/><line x1="769" y1="329" x2="769" y2="371"/></g>
+<!-- RDC partitions -->
+<g class="thin"><line x1="280" y1="400" x2="280" y2="515"/><line x1="400" y1="400" x2="400" y2="515"/><line x1="535" y1="400" x2="535" y2="515"/><line x1="650" y1="400" x2="650" y2="515"/><line x1="735" y1="400" x2="735" y2="515"/></g>
+<g class="t" text-anchor="middle"><text x="215" y="425">Cuisine</text><text x="340" y="425">Salle à manger</text><text x="468" y="425">Salon</text><text x="592" y="425">Buanderie</text><text x="692" y="425">WC</text><text x="792" y="425">Entrée</text></g>
+<!-- kitchen --> <g class="wood"><rect x="176" y="463" width="80" height="26"/><rect x="184" y="448" width="64" height="15"/><circle cx="200" cy="455" r="3" fill="#71846b"/><circle cx="230" cy="455" r="3" fill="#71846b"/></g>
+<!-- dining --> <g class="wood"><ellipse cx="340" cy="466" rx="40" ry="12"/><line class="w" x1="340" y1="478" x2="340" y2="495"/></g>
+<!-- sofa --> <g class="wood"><rect x="430" y="458" width="76" height="30" rx="7"/><rect x="436" y="448" width="64" height="16" rx="6"/></g>
+<!-- laundry --> <g class="f"><rect x="557" y="452" width="29" height="38" rx="3"/><circle cx="571" cy="471" r="9" fill="none" stroke="#71846b" stroke-width="2"/><rect x="592" y="452" width="29" height="38" rx="3"/><circle cx="606" cy="471" r="9" fill="none" stroke="#71846b" stroke-width="2"/></g>
+<!-- wc --> <g class="w"><ellipse cx="692" cy="469" rx="16" ry="9"/><path d="M680 469 q12 22 24 0"/></g>
+<!-- entry door --> <g class="wood"><rect x="770" y="444" width="42" height="65" rx="2"/><circle cx="804" cy="477" r="2" fill="#53664f"/></g>
+<!-- basement partitions -->
+<g class="thin"><line x1="380" y1="515" x2="380" y2="625"/><line x1="650" y1="515" x2="650" y2="625"/></g>
+<g class="t" text-anchor="middle"><text x="265" y="540">Chaufferie</text><text x="515" y="540">Stockage</text><text x="750" y="540">Pompes</text></g>
+<!-- boiler --> <g class="f"><rect x="225" y="566" width="60" height="48" rx="5"/><circle cx="255" cy="599" r="6" fill="none" stroke="#71846b" stroke-width="2"/><path class="w" d="M236 566 v-18 h28 v18"/></g>
+<!-- shelves --> <g class="wood"><rect x="450" y="561" width="130" height="54"/><line class="w" x1="450" y1="579" x2="580" y2="579"/><line class="w" x1="450" y1="597" x2="580" y2="597"/><rect x="465" y="566" width="26" height="10"/><rect x="515" y="583" width="33" height="10"/><rect x="470" y="601" width="38" height="10"/></g>
+<!-- pumps --> <g class="f"><circle cx="718" cy="592" r="18"/><circle cx="770" cy="592" r="18"/><rect x="704" y="548" width="28" height="28" rx="6"/><rect x="756" y="548" width="28" height="28" rx="6"/><path class="w" d="M718 548 v-18 h52 v18 M732 592 h24"/></g>
+<!-- subtle stairs --> <path class="thin" d="M818 610 h-18 v-14 h-18 v-14 h-18 v-14 h-18 v-14"/>
+</svg>
