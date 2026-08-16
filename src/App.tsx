@@ -40,7 +40,7 @@ const roomOverlays:RoomOverlay[]=[
   {id:'storage',label:'Stockage',temp:'18,9°',left:35.7,top:83.4,width:24.0,height:14.5},
   {id:'pumps',label:'Pompes',temp:'18,6°',left:59.7,top:83.4,width:24.0,height:14.5},
 ]
-const telemetryInset={x:1.2,y:1.6}
+const telemetryInset={x:1.6,y:2.4}
 
 function Nav({active,onNavigate}:{active:Screen;onNavigate:(s:Screen)=>void}){return <nav className="nav"><button className={active==='home'?'active':''} onClick={()=>onNavigate('home')}>Maison</button><button className={active==='floor'||active==='room'?'active':''} onClick={()=>onNavigate('floor')}>Pièces</button><button className={active==='departure'||active==='absence'?'active':''} onClick={()=>onNavigate('departure')}>Présence</button></nav>}
 function Shell({active,onNavigate,children}:{active:Screen;onNavigate:(s:Screen)=>void;children:React.ReactNode}){return <div className="shell"><main>{children}</main><Nav active={active} onNavigate={onNavigate}/></div>}
