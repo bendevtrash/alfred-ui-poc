@@ -1,0 +1,5 @@
+/* Local RDC overlay calibration. Keep the furnished PNG untouched. */
+.floorPlan:has(.hotspot)::before{
+  left:18.5% !important;
+  top:18% !important;
+}
