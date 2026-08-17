@@ -45,7 +45,7 @@ const roomOverlays:RoomOverlay[]=[
 const telemetryInset={x:1.0,y:2.0}
 const telemetrySafety={right:.9,bottom:.8}
 const floorViews:FloorView[]=[
-  {id:'ground',tab:'RDC',title:'Rez-de-chaussée',temp:'21,2°',plan:'rdc.svg',rooms:[
+  {id:'ground',tab:'RDC',title:'Rez-de-chaussée',temp:'21,2°',plan:'file_00000000235881f49f0ab7b4a6f9568b.png',rooms:[
     {name:'Cuisine',temp:'21,3°',detail:'Lumière allumée'},
     {name:'Salle à manger',temp:'21,1°',detail:'Lumière allumée'},
     {name:'Salon',temp:'21,2°',detail:'Lumière allumée',open:true},
