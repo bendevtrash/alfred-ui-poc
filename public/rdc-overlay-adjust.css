@@ -1,5 +1,11 @@
 /* Local RDC overlay calibration. Keep the furnished PNG untouched. */
-.floorPlan:has(.hotspot)::before{
-  left:18.5% !important;
-  top:18% !important;
-}
+.floorPlan:has(.hotspot)::before{display:none!important}
+.rdcTelemetry{position:absolute;z-index:4;display:flex;flex-direction:column;gap:1px;padding:6px 8px;border:1px solid rgba(65,78,63,.12);border-radius:9px;background:rgba(255,253,248,.94);box-shadow:0 3px 10px rgba(54,62,51,.12);color:#273128;font-size:.58rem;line-height:1.22;pointer-events:none;white-space:nowrap}
+.rdcTelemetry span{font-weight:800}
+.rdcTelemetry strong{font-weight:800}
+.rdcTelemetry i{color:#e4a11b;font-style:normal;font-size:.62em;vertical-align:middle}
+.rdcTelemetry--cuisine{left:18.5%;top:18%}
+.rdcTelemetry--salle-a-manger{left:17%;top:62%}
+.rdcTelemetry--salon{left:66%;top:43%}
+.rdcTelemetry--buanderie{left:76%;top:18%}
+.rdcTelemetry--entree{left:49%;top:24%}
